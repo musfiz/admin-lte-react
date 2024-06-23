@@ -1,0 +1,26 @@
+/*!
+ *   AdminLTE React v1.0.0
+ *   Author: Mustafizur Rahman
+ *   Website: 
+ *   License: Open source - MIT <https://opensource.org/licenses/MIT>
+ */
+
+// Bootstrap Layout & components
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// AdminLTE Configuration
+// ---------------------------------------------------
+@import "variables";
+@import "variables-dark";
+@import "mixins";
+
+// AdiminLTE Parts
+// ---------------------------------------------------
+@import "parts/core";
+@import "parts/components";
+@import "parts/extra-components";
+@import "parts/pages";
+@import "parts/miscellaneous";
+
+//Custom SCSS
+@import "custom"

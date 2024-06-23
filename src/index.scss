@@ -1,3 +1,45 @@
-h1 {
-  color: red;
+@import './scss/adminlte.scss';
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.main-header .navbar-nav .nav-item .nav-link {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#sidebar-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.firebase-emulator-warning {
+  display: none;
+}
+
+.layout-navbar-fixed.layout-fixed .wrapper .sidebar {
+  margin-top: 0;
+}
+
+.layout-navbar-fixed .wrapper .brand-link {
+  padding-bottom: 11px;
+}
+
+.control-sidebar-slide-open .control-sidebar,
+.control-sidebar-slide-open .control-sidebar::before {
+  right: -15px;
+}
+
+.layout-fixed.control-sidebar-slide-open .control-sidebar,
+.control-sidebar-slide-open .control-sidebar::before {
+  right: 0px;
+}
+
+.control-sidebar-slide-open .control-sidebar,
+.control-sidebar-slide-open .control-sidebar::before {
+  transition: none;
 }
