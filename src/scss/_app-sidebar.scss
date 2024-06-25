@@ -67,6 +67,7 @@
     margin-left: .5rem;
     color: rgba(var(--#{$prefix}emphasis-color-rgb), .8);
     @include transition(flex $lte-transition-speed $lte-transition-fn, width $lte-transition-speed $lte-transition-fn);
+
     &:hover {
       color: var(--#{$prefix}emphasis-color);
     }
@@ -95,6 +96,7 @@
       white-space: nowrap;
     }
   }
+
   .nav-icon {
     display: flex;
     align-items: center;
@@ -104,7 +106,7 @@
   }
 
   // Sidebar Menu. First level links
-  .sidebar-menu > .nav-item {
+  .sidebar-menu>.nav-item {
     &.menu-open {
       .nav-link.active:not(:hover) {
         --#{$lte-prefix}sidebar-menu-active-bg: transparent;
@@ -112,28 +114,29 @@
     }
 
     // links
-    > .nav-link {
+    >.nav-link {
+
       &:active,
       &:focus {
         color: var(--#{$lte-prefix}sidebar-color);
       }
     }
 
-    > .nav-link.active:not(:hover) {
+    >.nav-link.active:not(:hover) {
       color: var(--#{$lte-prefix}sidebar-menu-active-color);
       background-color: var(--#{$lte-prefix}sidebar-menu-active-bg);
     }
 
     // Hover and active states
-    &.menu-open > .nav-link,
-    &:hover > .nav-link,
-    > .nav-link:focus  {
+    &.menu-open>.nav-link,
+    &:hover>.nav-link,
+    >.nav-link:focus {
       color: var(--#{$lte-prefix}sidebar-hover-color);
       background-color: var(--#{$lte-prefix}sidebar-hover-bg);
     }
 
     // First Level Submenu
-    > .nav-treeview {
+    >.nav-treeview {
       background-color: var(--#{$lte-prefix}sidebar-submenu-bg);
     }
   }
@@ -151,8 +154,8 @@
 
   // All submenus
   .nav-treeview {
-    > .nav-item {
-      > .nav-link {
+    >.nav-item {
+      >.nav-link {
         color: var(--#{$lte-prefix}sidebar-submenu-color);
 
         &:hover,
@@ -162,7 +165,8 @@
         }
       }
 
-      > .nav-link.active {
+      >.nav-link.active {
+
         &,
         &:hover,
         &:focus {
@@ -171,7 +175,7 @@
         }
       }
 
-      > .nav-link:hover {
+      >.nav-link:hover {
         background-color: var(--#{$lte-prefix}sidebar-submenu-hover-bg);
       }
     }
@@ -180,9 +184,10 @@
 
 // Sidebar navigation menu
 .sidebar-menu {
+
   // All levels
   .nav-item {
-    > .nav-link {
+    >.nav-link {
       margin-bottom: .2rem;
 
       .nav-arrow {
@@ -196,14 +201,14 @@
   }
 
   // All levels
-  .nav-link > .nav-badge,
-  .nav-link > p > .nav-badge {
+  .nav-link>.nav-badge,
+  .nav-link>p>.nav-badge {
     position: absolute;
     right: 1rem;
   }
 
-  .nav-link > .nav-arrow,
-  .nav-link > p > .nav-arrow {
+  .nav-link>.nav-arrow,
+  .nav-link>p>.nav-arrow {
     position: absolute;
     top: 50%;
     right: 1rem;
@@ -222,32 +227,34 @@
   }
 
   .nav-header {
-    padding: $nav-link-padding-y ($nav-link-padding-y * 1.5);
-    font-size: .9rem;
+    padding: $nav-link-padding-y (
+      $nav-link-padding-y * 1.5
+    );
+  font-size: .9rem;
+}
+
+// Tree view menu
+.nav-treeview {
+  display: none;
+  padding: 0;
+  list-style: none;
+
+  .nav-indent & {
+    padding-left: $lte-sidebar-padding-x;
+  }
+}
+
+.menu-open {
+  >.nav-treeview {
+    display: block;
   }
 
-  // Tree view menu
-  .nav-treeview {
-    display: none;
-    padding: 0;
-    list-style: none;
-
-    .nav-indent & {
-      padding-left: $lte-sidebar-padding-x;
+  >.nav-link {
+    .nav-arrow {
+      transform: translateY(-50%) rotate(90deg) #{"/*rtl:ignore*/"};
     }
   }
-
-  .menu-open {
-    > .nav-treeview {
-      display: block;
-    }
-
-    > .nav-link {
-      .nav-arrow {
-        transform: translateY(-50%) rotate(90deg) #{"/*rtl:ignore*/"};
-      }
-    }
-  }
+}
 }
 
 .nav-compact.nav-indent {
@@ -289,7 +296,7 @@
 
 // A fix for text overflow while transitioning from sidebar mini to full sidebar
 .sidebar-menu,
-.sidebar-menu > .nav-header,
+.sidebar-menu>.nav-header,
 .sidebar-menu .nav-link {
   white-space: nowrap;
 }
@@ -351,6 +358,7 @@
         white-space: nowrap;
       }
     }
+
     .nav-badge,
     .nav-arrow {
       display: none;
@@ -416,6 +424,7 @@
       animation-duration: $lte-transition-speed;
       animation-fill-mode: both;
     }
+
     .nav-badge,
     .nav-arrow {
       display: inline-block;
@@ -429,6 +438,7 @@
     .nav-link p {
       padding-left: .5rem;
     }
+
     .logo-xs {
       visibility: hidden;
       animation-name: fadeOut;
@@ -452,6 +462,7 @@
     /* stylelint-disable-next-line scss/selector-no-union-class-name */
     &#{$infix} {
       @include media-breakpoint-up($next) {
+
         &.layout-fixed-complete,
         &.layout-fixed {
           .app-main-wrapper {
@@ -459,13 +470,16 @@
             flex-direction: column;
             min-height: 100vh;
           }
+
           .app-sidebar-wrapper {
             position: relative;
           }
+
           .app-main {
             flex: 1 1 auto;
             overflow: auto;
           }
+
           .app-sidebar {
             position: sticky;
             top: 0;
@@ -477,21 +491,25 @@
             }
           }
         }
+
         &.layout-fixed-complete {
           .app-main-wrapper {
             max-height: 100vh;
           }
         }
+
         &.sidebar-open {
-          .nav-link > .nav-badge,
-          .nav-link > p > .nav-badge {
+
+          .nav-link>.nav-badge,
+          .nav-link>p>.nav-badge {
             animation-name: fadeIn;
             animation-duration: $lte-transition-speed;
             animation-fill-mode: both;
             animation-delay: $lte-transition-speed;
           }
-          .nav-link > .nav-arrow,
-          .nav-link > p > .nav-arrow {
+
+          .nav-link>.nav-arrow,
+          .nav-link>p>.nav-arrow {
             animation-name: fadeIn;
             animation-duration: $lte-transition-speed;
             animation-fill-mode: both;
@@ -553,24 +571,29 @@
 // To prevent onload transition and animation
 .app-loaded {
   &.sidebar-mini.sidebar-collapse {
+
     .sidebar-menu .nav-link p,
     .brand-text {
       animation-duration: $lte-transition-speed;
     }
   }
 }
+
 body:not(.app-loaded) {
+
   .app-header,
-  .app-sidebar,
+  // .app-sidebar,
   .app-main,
   .app-footer {
     @include transition(none !important);
     animation-duration: 0s !important;
   }
 }
+
 .hold-transition {
+
   .app-header,
-  .app-sidebar,
+  // .app-sidebar,
   .app-main,
   .app-footer,
   .nav-arrow,
@@ -582,6 +605,7 @@ body:not(.app-loaded) {
 
 @if $enable-dark-mode {
   @include color-mode(dark) {
+
     &.app-sidebar,
     .app-sidebar {
       --#{$lte-prefix}sidebar-hover-bg: #{$lte-sidebar-hover-bg-dark};
@@ -600,4 +624,3 @@ body:not(.app-loaded) {
     }
   }
 }
-

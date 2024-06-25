@@ -15,12 +15,20 @@ const uiSlice = createSlice({
   reducers: {
     toggleSidebar: (state) => {
       state.sidebarCollapsed = !state.sidebarCollapsed;
+    },
+    sidebarOpen: (state) => {
+      state.sidebarCollapsed = false;
+    },
+    sidebarCollapse: (state) => {
+      state.sidebarCollapsed = true;
     }
   }
 });
 
 export const {
-  toggleSidebar
+  toggleSidebar,
+  sidebarOpen,
+  sidebarCollapse
 } = uiSlice.actions
 
 export default uiSlice.reducer;

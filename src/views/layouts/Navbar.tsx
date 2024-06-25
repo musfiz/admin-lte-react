@@ -1,9 +1,16 @@
 import { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../../store/reducers/ui";
 
 const NavBar = () => {
   const [userDropdown, setUserDropdown] = useState(false);
-
   let userDropdownRef = useRef();
+
+  const dispatch = useDispatch();
+
+  const collapsedSidebar = () => {
+    dispatch(toggleSidebar());
+  }
 
   useEffect(() => {
     let handler = (e: any) => {
@@ -15,7 +22,7 @@ const NavBar = () => {
     return () => {
       document.removeEventListener('mousedown', handler);
     }
-  });
+  }, []);
 
   return (
     <>
@@ -23,7 +30,7 @@ const NavBar = () => {
         <div className="container-fluid">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+              <a className="nav-link" data-lte-toggle="sidebar" href="#" role="button" onClick={collapsedSidebar}>
                 <i className="bi bi-list"></i>
               </a>
             </li>

@@ -1,16 +1,31 @@
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
-import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sidebarCollapse, sidebarOpen } from "../../store/reducers/ui";
 
 const SideBar = () => {
+  const menuRef = useRef();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let handler = (e: any) => {
+      if (window.innerWidth < 992 && !menuRef?.current?.contains(e.target)) {
+        dispatch(sidebarCollapse());
+      }
+    }
+    document.addEventListener('mousedown', handler);
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    }
+  }, []);
 
   return (
     <>
-      <aside className="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+      <aside className="app-sidebar bg-body-secondary shadow" data-bs-theme="dark" ref={menuRef}>
         <div className="sidebar-brand">
           <a href="#" className="brand-link">
             <img src="img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image opacity-75 shadow" />
-            <span className="brand-text fw-light">Admin LTE</span>
+            <span className="brand-text fw-light">Admin LTE React</span>
           </a>
         </div>
         <OverlayScrollbarsComponent defer options={{ scrollbars: { autoHide: 'scroll' } }}>
