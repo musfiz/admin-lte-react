@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import PublicRoute from './routes/PublicRoute'
 import PrivateRoute from "./routes/PrivateRoute"
 import Login from "./views/layouts/Login"
-import Main from "./views/layouts/Main"
+import Index from "./views/layouts/Index"
 import Dashboard from "./views/pages/Dashboard"
 import Profile from "./views/pages/Profile"
 
@@ -16,7 +16,7 @@ function App() {
         </Route>
 
         <Route path="/" element={<PrivateRoute />}>
-          <Route path="/" element={<Main />}>
+          <Route path="/" element={<Index />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
           </Route>

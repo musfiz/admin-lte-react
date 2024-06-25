@@ -2,10 +2,10 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./Navbar";
 import SideBar from "./SideBar";
 
-function Main() {
+function Index() {
   return (
     <>
-      <div className="layout-fixed sidebar-expand-lg bg-body-tertiary">
+      <div className="layout-fixed sidebar-expand-lg bg-body-tertiary sidebar-open">
         <div className="app-wrapper">
           <NavBar />
           <SideBar />
@@ -156,4 +156,4 @@ function Main() {
   )
 }
 
-export default Main;
+export default Index;

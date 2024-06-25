@@ -32,3 +32,15 @@
 .form-check-input {
   border-radius: 0 !important;
 }
+
+//Overlay Scrollbars style
+.os-scrollbar .os-scrollbar-handle:hover {
+  background: hsla(0, 0%, 100%, .66);
+  border: none;
+}
+
+.os-scrollbar .os-scrollbar-handle {
+  background: hsla(0, 0%, 100%, .44);
+  border: hsla(0, 0%, 100%, .55);
+  border-radius: hsla(0, 0%, 100%, .66);
+}
