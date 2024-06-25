@@ -1,11 +1,17 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./Navbar";
 import SideBar from "./SideBar";
+import { useSelector } from "react-redux";
 
-function Index() {
+const Index = () => {
+
+  const sidebarCollapsed = useSelector((state: any) => state.ui.sidebarCollapsed)
+
+  console.log(sidebarCollapsed);
+
   return (
     <>
-      <div className="layout-fixed sidebar-expand-lg bg-body-tertiary sidebar-open">
+      <div className="layout-fixed sidebar-expand-lg bg-body-tertiary">
         <div className="app-wrapper">
           <NavBar />
           <SideBar />

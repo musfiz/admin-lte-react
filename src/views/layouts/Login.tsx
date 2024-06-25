@@ -1,4 +1,4 @@
-function Login() {
+const Login = () => {
   return (
     <>
       <div className="login-page bg-body-secondary">
@@ -30,7 +30,7 @@ function Login() {
                         Remember Me
                       </label>
                     </div>
-                  </div>                  
+                  </div>
                 </div>
                 <div className="row">
                   <div className="col-12">
