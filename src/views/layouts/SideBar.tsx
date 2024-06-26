@@ -47,12 +47,14 @@ const menuItem = menu.map((item: IMenuItem, index: number) => (
       <p>{item.name} {item.children && item.children.length > 0 ? <i className="nav-arrow bi bi-chevron-right"></i> : ''}</p>
     </a>
     {item.children && item.children.length > 0 ?
-      <ul className="nav nav-treeview" style={{ boxSizing: 'border-box', display: 'none' }}>
-        <li className="nav-item">
-          <a href="#" className="nav-link"><i className="nav-icon bi bi-circle"></i>
-            <p>Small Box</p>
-          </a>
-        </li>
+      <ul className="nav nav-treeview" style={{ boxSizing: 'border-box', display: 'block' }}>
+        {item?.children.map((item2: IMenuItem, index2: number) => (
+          <li className="nav-item" key={index2}>
+            <a href="#" className="nav-link"><i className="nav-icon bi bi-circle"></i>
+              <p>Small Box</p>
+            </a>
+          </li>
+        ))}
       </ul>
       : ''}
   </li >
