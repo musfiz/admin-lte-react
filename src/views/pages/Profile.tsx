@@ -1,4 +1,4 @@
-function Profile(){
+const Profile = () => {
   return (
     <>
       <h2>This is Profile Page</h2>

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 export interface uiState {
-  sidebarCollapsed: boolean
+  sidebarCollapsed: boolean,
 }
 
 const initialState: uiState = {

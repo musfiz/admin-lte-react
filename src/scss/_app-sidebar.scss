@@ -579,29 +579,28 @@
   }
 }
 
-body:not(.app-loaded) {
+// body:not(.app-loaded) {
 
-  .app-header,
-  // .app-sidebar,
-  .app-main,
-  .app-footer {
-    @include transition(none !important);
-    animation-duration: 0s !important;
-  }
-}
+//   .app-header,
+//   .app-sidebar,
+//   .app-main,
+//   .app-footer {
+//     @include transition(none !important);
+//     animation-duration: 0s !important;
+//   }
+// }
 
-.hold-transition {
-
-  .app-header,
-  // .app-sidebar,
-  .app-main,
-  .app-footer,
-  .nav-arrow,
-  .nav-badge {
-    @include transition(none !important);
-    animation-duration: 0s !important;
-  }
-}
+// .hold-transition {
+//   .app-header,
+//   .app-sidebar,
+//   .app-main,
+//   .app-footer,
+//   .nav-arrow,
+//   .nav-badge {
+//     @include transition(none !important);
+//     animation-duration: 0s !important;
+//   }
+// }
 
 @if $enable-dark-mode {
   @include color-mode(dark) {

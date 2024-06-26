@@ -1,7 +1,63 @@
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { sidebarCollapse, sidebarOpen } from "../../store/reducers/ui";
+import { useDispatch } from "react-redux";
+import { sidebarCollapse } from "../../store/reducers/ui";
+
+export interface IMenuItem {
+  name: string;
+  icon?: string;
+  path?: string;
+  children?: Array<IMenuItem>;
+}
+
+const menu: IMenuItem[] = [
+  {
+    name: 'Dashboard',
+    icon: 'nav-icon bi bi-speedometer',
+    path: '/',
+  },
+  {
+    name: 'Blank Page',
+    icon: 'nav-icon bi bi-clipboard-fill',
+    path: '/blank',
+  },
+  {
+    name: 'Widgets',
+    icon: 'nav-icon bi bi-box-seam-fill',
+    children: [
+      {
+        name: 'Small Box',
+        icon: 'nav-icon bi bi-circle',
+        path: '/small-box',
+      },
+
+      {
+        name: 'Info Box',
+        icon: 'nav-icon bi bi-circle',
+        path: '/info-box',
+      }
+    ],
+  },
+];
+
+const menuItem = menu.map((item: IMenuItem, index: number) => (
+  <li className={`nav-item menu-open`} key={index}>
+    <a href="#" className="nav-link">
+      <i className={item.icon}></i>
+      <p>{item.name} {item.children && item.children.length > 0 ? <i className="nav-arrow bi bi-chevron-right"></i> : ''}</p>
+    </a>
+    {item.children && item.children.length > 0 ?
+      <ul className="nav nav-treeview" style={{ boxSizing: 'border-box', display: 'none' }}>
+        <li className="nav-item">
+          <a href="#" className="nav-link"><i className="nav-icon bi bi-circle"></i>
+            <p>Small Box</p>
+          </a>
+        </li>
+      </ul>
+      : ''}
+  </li >
+));
+
 
 const SideBar = () => {
   const menuRef = useRef();
@@ -32,13 +88,14 @@ const SideBar = () => {
           <div className="sidebar-wrapper">
             <nav className="mt-2">
               <ul className="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                <li className="nav-item">
+                {menuItem}
+                {/* <li className="nav-item">
                   <a href="#" className="nav-link active">
                     <i className="nav-icon bi bi-speedometer"></i>
                     <p>Dashboard</p>
                   </a>
-                </li>
-                <li className="nav-item">
+                </li> */}
+                {/* <li className="nav-item">
                   <a href="#" className="nav-link">
                     <i className="nav-icon bi bi-box-seam-fill"></i>
                     <p> Widgets<i className="nav-arrow bi bi-chevron-right"></i></p>
@@ -60,100 +117,80 @@ const SideBar = () => {
                       </a>
                     </li>
                   </ul>
+                </li> */}
+                {/* <li className="nav-header">MULTI LEVEL EXAMPLE</li>
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="nav-icon bi bi-circle-fill"></i>
+                    <p>Level 1</p>
+                  </a>
                 </li>
-                <li className="nav-header">EXAMPLES</li>
-                <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-box-arrow-in-right"></i>
-                  <p>
-                    Auth
-                    <i className="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
+                <li className="nav-item">
+                  <a href="#" className="nav-link"><i className="nav-icon bi bi-circle-fill"></i>
+                    <p>Level 1
+                      <i className="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                  </a>
                   <ul className="nav nav-treeview">
-                    <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-box-arrow-in-right"></i>
-                      <p>
-                        Version 1
-                        <i className="nav-arrow bi bi-chevron-right"></i>
-                      </p>
-                    </a>
+                    <li className="nav-item">
+                      <a href="#" className="nav-link"><i className="nav-icon bi bi-circle"></i>
+                        <p>Level 2</p>
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a href="#" className="nav-link">
+                        <i className="nav-icon bi bi-circle"></i>
+                        <p> Level 2 <i className="nav-arrow bi bi-chevron-right"></i></p>
+                      </a>
                       <ul className="nav nav-treeview">
-                        <li className="nav-item"> <a href="./examples/login.html" className="nav-link"> <i className="nav-icon bi bi-circle"></i>
-                          <p>Login</p>
-                        </a> </li>
-                        <li className="nav-item"> <a href="./examples/register.html" className="nav-link"> <i className="nav-icon bi bi-circle"></i>
-                          <p>Register</p>
-                        </a> </li>
+                        <li className="nav-item">
+                          <a href="#" className="nav-link"><i className="nav-icon bi bi-record-circle-fill"></i>
+                            <p>Level 3</p>
+                          </a>
+                        </li>
+                        <li className="nav-item">
+                          <a href="#" className="nav-link"><i className="nav-icon bi bi-record-circle-fill"></i>
+                            <p>Level 3</p>
+                          </a>
+                        </li>
+                        <li className="nav-item">
+                          <a href="#" className="nav-link"><i className="nav-icon bi bi-record-circle-fill"></i>
+                            <p>Level 3</p>
+                          </a>
+                        </li>
                       </ul>
                     </li>
-                    <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-box-arrow-in-right"></i>
-                      <p>
-                        Version 2
-                        <i className="nav-arrow bi bi-chevron-right"></i>
-                      </p>
-                    </a>
-                      <ul className="nav nav-treeview">
-                        <li className="nav-item"> <a href="./examples/login-v2.html" className="nav-link"> <i className="nav-icon bi bi-circle"></i>
-                          <p>Login</p>
-                        </a> </li>
-                        <li className="nav-item"> <a href="./examples/register-v2.html" className="nav-link"> <i className="nav-icon bi bi-circle"></i>
-                          <p>Register</p>
-                        </a> </li>
-                      </ul>
+                    <li className="nav-item">
+                      <a href="#" className="nav-link"><i className="nav-icon bi bi-circle"></i>
+                        <p>Level 2</p>
+                      </a>
                     </li>
-                    <li className="nav-item"> <a href="./examples/lockscreen.html" className="nav-link"> <i className="nav-icon bi bi-circle"></i>
-                      <p>Lockscreen</p>
-                    </a> </li>
                   </ul>
                 </li>
-                <li className="nav-header">MULTI LEVEL EXAMPLE</li>
-                <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-circle-fill"></i>
-                  <p>Level 1</p>
-                </a> </li>
-                <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-circle-fill"></i>
-                  <p>
-                    Level 1
-                    <i className="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
-                  <ul className="nav nav-treeview">
-                    <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-circle"></i>
-                      <p>Level 2</p>
-                    </a> </li>
-                    <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-circle"></i>
-                      <p>
-                        Level 2
-                        <i className="nav-arrow bi bi-chevron-right"></i>
-                      </p>
-                    </a>
-                      <ul className="nav nav-treeview">
-                        <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-record-circle-fill"></i>
-                          <p>Level 3</p>
-                        </a> </li>
-                        <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-record-circle-fill"></i>
-                          <p>Level 3</p>
-                        </a> </li>
-                        <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-record-circle-fill"></i>
-                          <p>Level 3</p>
-                        </a> </li>
-                      </ul>
-                    </li>
-                    <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-circle"></i>
-                      <p>Level 2</p>
-                    </a> </li>
-                  </ul>
+                <li className="nav-item">
+                  <a href="#" className="nav-link"><i className="nav-icon bi bi-circle-fill"></i>
+                    <p>Level 1</p>
+                  </a>
                 </li>
-                <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-circle-fill"></i>
-                  <p>Level 1</p>
-                </a> </li>
                 <li className="nav-header">LABELS</li>
-                <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-circle text-danger"></i>
-                  <p className="text">Important</p>
-                </a> </li>
-                <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-circle text-warning"></i>
-                  <p>Warning</p>
-                </a> </li>
-                <li className="nav-item"> <a href="#" className="nav-link"> <i className="nav-icon bi bi-circle text-info"></i>
-                  <p>Informational</p>
-                </a> </li>
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="nav-icon bi bi-circle text-danger"></i>
+                    <p className="text">Important</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="nav-icon bi bi-circle text-warning"></i>
+                    <p>Warning</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="nav-icon bi bi-circle text-info"></i>
+                    <p>Informational</p>
+                  </a>
+                </li> */}
               </ul>
             </nav>
           </div>
