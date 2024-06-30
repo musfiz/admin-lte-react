@@ -148,19 +148,20 @@ const SideBar = () => {
   const menuItemHtml = menuItem.map((item, i) => (
     <li className={`nav-item ${item.children?.length == 0 && item.isActive ? 'active' : ''} ${item.children && item.isExpand ? 'menu-open' : ''}`} key={i}>
       {!item.children ?
-        <Link to={`${item.path}`} className="nav-link">
+        (<Link to={`${item.path}`} className="nav-link">
           <i className={item.icon}></i>
           <p>{item.name}</p>
         </Link>
-        :
-        <a className="nav-link" onClick={(e) => menuExtended(e, i)}>
-          <i className={item.icon}></i>
-          <p>{item.name} {item.children && item.children.length > 0 ? <i className="nav-arrow bi bi-chevron-right"></i> : ''}</p>
-        </a>
+        ) : (
+          <a href="javascript:void(0)" className="nav-link" onClick={(e) => menuExtended(e, i)}>
+            <i className={item.icon}></i>
+            <p>{item.name} {item.children && item.children.length > 0 ? <i className="nav-arrow bi bi-chevron-right"></i> : ''}</p>
+          </a>
+        )
       }
       {
         item.children && item.children.length > 0 ?
-          <ul className="nav nav-treeview">
+          (<ul className="nav nav-treeview">
             {item?.children.map((item2: IMenuItem, j: number) => (
               <li className="nav-item" key={j}>
                 <Link to={item2.path} className="nav-link"><i className="nav-icon bi bi-circle"></i>
@@ -169,6 +170,7 @@ const SideBar = () => {
               </li>
             ))}
           </ul>
+          )
           : ''
       }
     </li >
