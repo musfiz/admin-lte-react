@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { toggleSidebar } from "../../store/reducers/ui";
+import { toggleSidebar } from "../store/reducers/ui";
 
 const NavBar = () => {
   const [userDropdown, setUserDropdown] = useState(false);

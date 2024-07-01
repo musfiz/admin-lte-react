@@ -1,10 +1,10 @@
-import NavBar from "./Navbar";
-import SideBar from "./SideBar";
-import Footer from "./Footer";
+import SideBar from "../../components/SideBar";
+import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { sidebarCollapse, sidebarOpen } from "../../store/reducers/ui";
 import { Outlet } from "react-router-dom";
+import NavBar from "../../components/Navbar";
 
 const Index = () => {
 

@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { sidebarCollapse } from "../../store/reducers/ui";
+import { sidebarCollapse } from "../store/reducers/ui";
+import { slideDown, slideUp } from "../helpers/sidebarHelper";
 
 export interface IMenuItem {
   name: string;
@@ -11,66 +12,6 @@ export interface IMenuItem {
   isExpand?: boolean,
   isActive?: boolean,
   children?: Array<IMenuItem>;
-}
-
-const slideUp = (e: any, duration: number) => {
-  let target = e.target.closest('li').querySelector('.nav-treeview');
-  target.style.transitionProperty = 'height, margin, padding';
-  target.style.transitionDuration = `${duration}ms`;
-  target.style.boxSizing = 'border-box';
-  target.style.height = `${target.offsetHeight}px`;
-  target.style.overflow = 'hidden';
-  setTimeout(() => {
-    target.style.height = '0';
-    target.style.paddingTop = '0';
-    target.style.paddingBottom = '0';
-    target.style.marginTop = '0';
-    target.style.marginBottom = '0';
-  }, 1);
-  setTimeout(() => {
-    target.style.display = 'none';
-    target.style.removeProperty('height');
-    target.style.removeProperty('padding-top');
-    target.style.removeProperty('padding-bottom');
-    target.style.removeProperty('margin-top');
-    target.style.removeProperty('margin-bottom');
-    target.style.removeProperty('overflow');
-    target.style.removeProperty('transition-duration');
-    target.style.removeProperty('transition-property');
-  }, duration);
-}
-
-const slideDown = (e: any, duration: number) => {
-  let target = e.target.closest('li').querySelector('.nav-treeview');
-  target.style.removeProperty('display');
-  let { display } = window.getComputedStyle(target);
-  if (display === 'none') {
-    display = 'block';
-  }
-  target.style.display = display;
-  const height = target.offsetHeight;
-  target.style.overflow = 'hidden';
-  target.style.height = '0';
-  target.style.paddingTop = '0';
-  target.style.paddingBottom = '0';
-  target.style.marginTop = '0';
-  target.style.marginBottom = '0';
-  setTimeout(() => {
-    target.style.boxSizing = 'border-box';
-    target.style.transitionProperty = 'height, margin, padding';
-    target.style.transitionDuration = `${duration}ms`;
-    target.style.height = `${height}px`;
-    target.style.removeProperty('padding-top');
-    target.style.removeProperty('padding-bottom');
-    target.style.removeProperty('margin-top');
-    target.style.removeProperty('margin-bottom');
-  }, 1);
-  setTimeout(() => {
-    target.style.removeProperty('height');
-    target.style.removeProperty('overflow');
-    target.style.removeProperty('transition-duration');
-    target.style.removeProperty('transition-property');
-  }, duration);
 }
 
 const menu: IMenuItem[] = [
@@ -134,14 +75,38 @@ const SideBar = () => {
 
   const [menuItem, setMenuItem] = useState(menu);
 
+  const allMenuExtendUp = () => {
+    const navClassList = document.querySelectorAll('.nav-treeview');
+    for (let i = 0; i < navClassList.length; i++) {
+      navClassList[i].style.display = 'none';
+    }
+  }
+
+  const allMenuExtendDown = () => {
+    const navClassList = document.querySelectorAll('.nav-treeview');
+    for (let i = 0; i < navClassList.length; i++) {
+      navClassList[i].style.display = 'display';
+    }
+  }
+
   const menuExtended = (e: any, index: number,) => {
     menuItem[index].isExpand = !menuItem[index].isExpand;
     if (menuItem[index].isExpand) {
+      allMenuExtendUp();
       slideDown(e, 300);
     } else {
+      allMenuExtendDown();
       slideUp(e, 300);
     }
     setMenuItem([...menuItem]);
+  }
+
+  const menuActive = () => {
+
+  }
+
+  const childMenuActive = () => {
+
   }
 
   const menuItemHtml = menuItem.map((item, i) => (
