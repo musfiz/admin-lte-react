@@ -92,36 +92,35 @@ const menu: IMenuItem[] = [
     isExpand: false,
     children: [
       {
-        name: 'Small Box',
-        icon: 'nav-icon bi bi-circle',
-        path: '/small-box',
-        isActive: false
-      },
-
-      {
         name: 'Info Box',
         icon: 'nav-icon bi bi-circle',
         path: '/info-box',
+        isActive: false
+      },
+      {
+        name: 'Cards',
+        icon: 'nav-icon bi bi-circle',
+        path: '/card',
         isActive: false
       }
     ],
   },
   {
-    name: 'Pages',
-    icon: 'nav-icon bi bi-box-seam-fill',
+    name: 'UI',
+    icon: 'nav-icon bi bi-tree-fill',
     isExpand: false,
     children: [
       {
-        name: 'Small Box',
+        name: 'Tables',
         icon: 'nav-icon bi bi-circle',
-        path: '/small-box',
+        path: '/table',
         isActive: false
       },
 
       {
-        name: 'Info Box',
+        name: 'General Elements',
         icon: 'nav-icon bi bi-circle',
-        path: '/info-box',
+        path: '/element',
         isActive: false
       }
     ],
@@ -153,10 +152,10 @@ const SideBar = () => {
           <p>{item.name}</p>
         </Link>
         ) : (
-          <a href="javascript:void(0)" className="nav-link" onClick={(e) => menuExtended(e, i)}>
+          <Link to={'#'} className="nav-link" onClick={(e) => menuExtended(e, i)}>
             <i className={item.icon}></i>
             <p>{item.name} {item.children && item.children.length > 0 ? <i className="nav-arrow bi bi-chevron-right"></i> : ''}</p>
-          </a>
+          </Link>
         )
       }
       {
