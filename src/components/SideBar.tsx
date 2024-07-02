@@ -3,7 +3,6 @@ import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { sidebarCollapse } from "../store/reducers/ui";
-import { slideDown, slideUp } from "../helpers/sidebarHelper";
 
 export interface IMenuItem {
   name: string;
@@ -75,44 +74,52 @@ const SideBar = () => {
 
   const [menuItem, setMenuItem] = useState(menu);
 
-  const allMenuExtendUp = () => {
-    const navClassList = document.querySelectorAll('.nav-treeview');
-    for (let i = 0; i < navClassList.length; i++) {
-      navClassList[i].style.display = 'none';
-    }
-  }
-
-  const allMenuExtendDown = () => {
-    const navClassList = document.querySelectorAll('.nav-treeview');
-    for (let i = 0; i < navClassList.length; i++) {
-      navClassList[i].style.display = 'display';
-    }
-  }
-
   const menuExtended = (e: any, index: number,) => {
     menuItem[index].isExpand = !menuItem[index].isExpand;
-    if (menuItem[index].isExpand) {
-      allMenuExtendUp();
-      slideDown(e, 300);
-    } else {
-      allMenuExtendDown();
-      slideUp(e, 300);
-    }
+    menuItem.map((item, i) => {
+      if (i !== index) {
+        menuItem[i].isExpand = false;
+        return { ...item };
+      }
+    });
     setMenuItem([...menuItem]);
   }
 
-  const menuActive = () => {
-
+  const menuActive = (index: number) => {
+    menuItem[index].isActive = !menuItem[index].isActive;
+    menuItem.map((item, i) => {
+      if (i !== index) {
+        item.isActive = false;
+        return { ...item };
+      }
+    });
+    menuItem.map((item, i) => {
+      item.isExpand = false;
+      return { ...item };
+    })
+    setMenuItem([...menuItem]);
   }
 
-  const childMenuActive = () => {
-
+  const childMenuActive = (parentIndex: number, childIndex: number) => {
+    menuItem.map((item: any, i: number) => {
+      item.isActive = false;
+      item.children?.map((item2: any, j: number) => {
+        if (i === parentIndex && j === childIndex) {
+          item2.isActive = true;
+        } else {
+          item2.isActive = false;
+        }
+        return { ...item2 }
+      })
+      return { ...item };
+    });
+    setMenuItem([...menuItem]);
   }
 
   const menuItemHtml = menuItem.map((item, i) => (
     <li className={`nav-item ${item.children?.length == 0 && item.isActive ? 'active' : ''} ${item.children && item.isExpand ? 'menu-open' : ''}`} key={i}>
       {!item.children ?
-        (<Link to={`${item.path}`} className="nav-link">
+        (<Link to={`${item.path}`} className={`nav-link ${item.isActive ? 'active' : ''}`} onClick={() => menuActive(i)}>
           <i className={item.icon}></i>
           <p>{item.name}</p>
         </Link>
@@ -128,7 +135,8 @@ const SideBar = () => {
           (<ul className="nav nav-treeview">
             {item?.children.map((item2: IMenuItem, j: number) => (
               <li className="nav-item" key={j}>
-                <Link to={item2.path} className="nav-link"><i className="nav-icon bi bi-circle"></i>
+                <Link to={item2.path} className={`nav-link ${item2.isActive ? 'active' : ''}`} onClick={() => childMenuActive(i, j)}>
+                  <i className="nav-icon bi bi-circle"></i>
                   <p>{item2.name}</p>
                 </Link>
               </li>
