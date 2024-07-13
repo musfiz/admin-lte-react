@@ -44,3 +44,14 @@
   border: hsla(0, 0%, 100%, .55);
   border-radius: hsla(0, 0%, 100%, .66);
 }
+
+// sidebar custom css
+.nav-treeview {
+  .nav-item {
+    margin-left: 10px;
+  }
+}
+
+.nav-link {
+  padding: 4px;
+}

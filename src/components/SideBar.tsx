@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { sidebarCollapse } from "../store/reducers/ui";
+import { slideDown, slideUp } from "../helpers/sidebarHelper";
 
 export interface IMenuItem {
   name: string;
@@ -71,17 +72,36 @@ const menu: IMenuItem[] = [
 const SideBar = () => {
   const menuRef = useRef();
   const dispatch = useDispatch();
-
   const [menuItem, setMenuItem] = useState(menu);
+
+  const location = useLocation();
+
+  const menuStateAfterPageLoad = () => {
+    const currentURI = location.pathname;
+    menuItem.map((item) => {
+      if (item.path === currentURI) {
+        item.isActive = true;
+      } else {
+        item.children?.map((item2) => {
+          if (item2.path === currentURI) {
+            item2.isActive = true;
+            item.isExpand = true;
+          }
+          return { ...item2 };
+        });
+      }
+      return { ...item };
+    });
+    setMenuItem([...menuItem]);
+  }
 
   const menuExtended = (e: any, index: number,) => {
     menuItem[index].isExpand = !menuItem[index].isExpand;
-    menuItem.map((item, i) => {
-      if (i !== index) {
-        menuItem[i].isExpand = false;
-        return { ...item };
-      }
-    });
+    if (menuItem[index].isExpand) {
+      slideDown(e, 300);
+    } else {
+      slideUp(e, 300);
+    }
     setMenuItem([...menuItem]);
   }
 
@@ -90,22 +110,24 @@ const SideBar = () => {
     menuItem.map((item, i) => {
       if (i !== index) {
         item.isActive = false;
+        item.isExpand = false;
+        item.children?.map((item2: any, j: number) => {
+          item2.isActive = false;
+        });
         return { ...item };
       }
     });
-    menuItem.map((item, i) => {
-      item.isExpand = false;
-      return { ...item };
-    })
     setMenuItem([...menuItem]);
   }
 
   const childMenuActive = (parentIndex: number, childIndex: number) => {
     menuItem.map((item: any, i: number) => {
       item.isActive = false;
+      item.isExpand = false;
       item.children?.map((item2: any, j: number) => {
         if (i === parentIndex && j === childIndex) {
           item2.isActive = true;
+          item.isExpand = true;
         } else {
           item2.isActive = false;
         }
@@ -132,7 +154,7 @@ const SideBar = () => {
       }
       {
         item.children && item.children.length > 0 ?
-          (<ul className="nav nav-treeview">
+          (<ul className="nav nav-treeview" style={item.isExpand ? { display: 'block' } : { display: 'none' }}>
             {item?.children.map((item2: IMenuItem, j: number) => (
               <li className="nav-item" key={j}>
                 <Link to={item2.path} className={`nav-link ${item2.isActive ? 'active' : ''}`} onClick={() => childMenuActive(i, j)}>
@@ -149,6 +171,7 @@ const SideBar = () => {
   ));
 
   useEffect(() => {
+    menuStateAfterPageLoad();
     let handler = (e: any) => {
       if (window.innerWidth < 992 && !menuRef?.current?.contains(e.target)) {
         dispatch(sidebarCollapse());
