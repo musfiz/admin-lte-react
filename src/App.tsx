@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react"
 import { Routes, Route } from 'react-router-dom'
 import PublicRoute from './routes/PublicRoute'
 import PrivateRoute from "./routes/PrivateRoute"
