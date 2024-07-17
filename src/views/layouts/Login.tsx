@@ -1,4 +1,44 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { setCurrentUser } from "../../store/reducers/auth";
+import { loginWithEmail } from "../../services/auth";
+import { ToastContainer, toast } from "react-toastify";
+
 const Login = () => {
+
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+
+  const [validationErrors, setValidationErrors] = useState({ email: [], password: [] });
+
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await loginWithEmail(formData);
+      if (response.status === 200) {
+        toast.success(response.data.message);
+      }
+    }
+    catch (error: any) {
+      if (error.response.status === 401) {
+        toast.error(error.response.data.message);
+      } else {
+        const responseData = error.response.data.data;
+        console.log({ ...responseData });
+        setValidationErrors({ ...responseData });
+        console.log('===============Validation Error=====================');
+        console.log(validationErrors, error.response.status);
+        console.log('====================================');
+      }
+    }
+
+
+  }
+
   return (
     <>
       <div className="login-page bg-body-secondary">
@@ -9,15 +49,15 @@ const Login = () => {
           <div className="card">
             <div className="card-body login-card-body">
               <p className="login-box-msg">Sign in to start your session</p>
-              <form action="" method="post">
+              <form method="POST" onSubmit={handleSubmit}>
                 <div className="input-group mb-3">
-                  <input type="email" className="form-control form-control-custom" placeholder="Email" />
+                  <input type="email" name="email" className="form-control form-control-custom" placeholder="Email" onChange={handleChange} />
                   <div className="input-group-text">
                     <span className="bi bi-envelope"></span>
                   </div>
                 </div>
                 <div className="input-group mb-3">
-                  <input type="password" className="form-control form-control-custom" placeholder="Password" />
+                  <input type="password" name="password" className="form-control form-control-custom" placeholder="Password" onChange={handleChange} />
                   <div className="input-group-text">
                     <span className="bi bi-lock-fill"></span>
                   </div>
@@ -35,7 +75,9 @@ const Login = () => {
                 <div className="row">
                   <div className="col-12">
                     <div className="d-grid gap-2">
-                      <button type="submit" className="btn btn-success btn-flat">Sign In</button>
+                      <button type="submit" className="btn btn-success btn-flat">
+                        <i className="bi bi-box-arrow-in-right"></i> Sign In
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -60,6 +102,7 @@ const Login = () => {
             </div>
           </div>
         </div>
+        <ToastContainer autoClose={3000} theme="colored" />
       </div>
     </>
   )
