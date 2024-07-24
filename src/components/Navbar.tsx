@@ -15,7 +15,7 @@ const NavBar = () => {
   }
 
   const logout = () => {
-    dispatch(setCurrentUser([]))
+    dispatch(setCurrentUser())
   }
 
   useEffect(() => {
