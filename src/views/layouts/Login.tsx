@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../../store/reducers/auth";
 import { loginWithEmail } from "../../services/auth";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+
 
 const Login = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const [validationErrors, setValidationErrors] = useState({ email: [], password: [] });
@@ -21,6 +24,10 @@ const Login = () => {
       const response = await loginWithEmail(formData);
       if (response.status === 200) {
         toast.success(response.data.message);
+        setTimeout(() => {
+          dispatch(setCurrentUser(response.data.data));
+          navigate('/');
+        }, 2500);
       }
     }
     catch (error: any) {
@@ -28,15 +35,9 @@ const Login = () => {
         toast.error(error.response.data.message);
       } else {
         const responseData = error.response.data.data;
-        console.log({ ...responseData });
         setValidationErrors({ ...responseData });
-        console.log('===============Validation Error=====================');
-        console.log(validationErrors, error.response.status);
-        console.log('====================================');
       }
     }
-
-
   }
 
   return (
@@ -102,7 +103,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-        <ToastContainer autoClose={3000} theme="colored" />
+        <ToastContainer autoClose={2000} theme="colored" />
       </div>
     </>
   )

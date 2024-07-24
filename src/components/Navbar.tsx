@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../store/reducers/ui";
+import { Link } from "react-router-dom";
+import { setCurrentUser } from "../store/reducers/auth";
 
 const NavBar = () => {
   const [userDropdown, setUserDropdown] = useState(false);
@@ -10,6 +12,10 @@ const NavBar = () => {
 
   const collapsedSidebar = () => {
     dispatch(toggleSidebar());
+  }
+
+  const logout = () => {
+    dispatch(setCurrentUser([]))
   }
 
   useEffect(() => {
@@ -33,6 +39,9 @@ const NavBar = () => {
               <a className="nav-link" data-lte-toggle="sidebar" href="#" role="button" onClick={collapsedSidebar}>
                 <i className="bi bi-list"></i>
               </a>
+            </li>
+            <li className="nav-item d-none d-md-block">
+              <Link to="/login" className="nav-link">Login</Link>
             </li>
             <li className="nav-item d-none d-md-block">
               <a href="#" className="nav-link">Home</a>
@@ -139,7 +148,9 @@ const NavBar = () => {
                 </li>
                 <li className="user-footer">
                   <a href="#" className="btn btn-default btn-flat">Profile</a>
-                  <a href="#" className="btn btn-danger btn-flat float-end">Sign out</a>
+                  <a href="#" className="btn btn-danger btn-flat float-end" onClick={logout}>
+                    <i className="bi bi-box-arrow-in-left"></i>Sign out
+                  </a>
                 </li>
               </ul>
             </li>
