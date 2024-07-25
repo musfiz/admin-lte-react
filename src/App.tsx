@@ -10,8 +10,27 @@ import Card from "./views/pages/Card"
 import InfoBox from "./views/pages/InfoBox"
 import Table from "./views/pages/Table"
 import Element from "./views/pages/Element"
+import { useEffect } from 'react'
+import { useCookies } from 'react-cookie'
+import { useDispatch } from 'react-redux'
+import { setCurrentUser } from './store/reducers/auth'
+import { sidebarCollapse, sidebarOpen } from './store/reducers/ui'
 
 function App() {
+  const [cookie] = useCookies(['payload']);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (cookie.payload) {
+      dispatch(setCurrentUser(cookie.payload));
+    }
+    if (localStorage.sidebar) {
+      dispatch(sidebarCollapse());
+    } else {
+      dispatch(sidebarOpen());
+    }
+  }, []);
+
   return (
     <>
       <Routes>

@@ -20,11 +20,16 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser: (state: AuthState, data: any) => {
-      state.loggedUser = data.payload;
+      state.loggedUser.token = data.payload.token;
+      state.loggedUser.user = data.payload.user;
+    },
+    emptyCurrentUser: (state: AuthState) => {
+      state.loggedUser.token = null;
+      state.loggedUser.user = null;
     }
   }
 });
 
-export const { setCurrentUser } = authSlice.actions;
+export const { setCurrentUser, emptyCurrentUser } = authSlice.actions;
 
 export default authSlice.reducer;

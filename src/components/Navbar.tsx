@@ -1,21 +1,26 @@
 import { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../store/reducers/ui";
 import { Link } from "react-router-dom";
-import { setCurrentUser } from "../store/reducers/auth";
+import { emptyCurrentUser } from "../store/reducers/auth";
+import { useCookies } from "react-cookie";
 
 const NavBar = () => {
   const [userDropdown, setUserDropdown] = useState(false);
   let userDropdownRef = useRef();
+  const [cookie, removeCookie] = useCookies(["payload"]);
+  const sidebar = useSelector((state: any) => state.ui.sidebarCollapsed);
 
   const dispatch = useDispatch();
 
   const collapsedSidebar = () => {
+    localStorage.sidebar = sidebar;
     dispatch(toggleSidebar());
   }
 
   const logout = () => {
-    dispatch(setCurrentUser())
+    removeCookie('payload', '');
+    dispatch(emptyCurrentUser());
   }
 
   useEffect(() => {

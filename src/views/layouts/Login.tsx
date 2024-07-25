@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../../store/reducers/auth";
+import { sidebarOpen } from "../../store/reducers/ui";
 import { loginWithEmail } from "../../services/auth";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
 
 
 const Login = () => {
@@ -13,6 +15,8 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const [validationErrors, setValidationErrors] = useState({ email: [], password: [] });
+
+  const [cookie, setCookie] = useCookies(['payload'], { doNotParse: true });
 
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,8 +28,15 @@ const Login = () => {
       const response = await loginWithEmail(formData);
       if (response.status === 200) {
         toast.success(response.data.message);
+        const expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() + 1);
+        setCookie('payload', response.data.data, {
+          expires: expireDate
+        });
+        localStorage.sidebar = true;
         setTimeout(() => {
           dispatch(setCurrentUser(response.data.data));
+          dispatch(sidebarOpen());
           navigate('/');
         }, 2500);
       }
