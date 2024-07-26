@@ -3,13 +3,15 @@ import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { sidebarCollapse, sidebarOpen } from "../../store/reducers/ui";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../../components/Navbar";
 
 const Index = () => {
 
   const sidebarCollapsed = useSelector((state: any) => state.ui.sidebarCollapsed);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleResize = () => {
     if (window.innerWidth < 992) {
@@ -20,6 +22,8 @@ const Index = () => {
   }
 
   useEffect(() => {
+    const currentURI = location.pathname;
+    navigate(currentURI);
     handleResize();
     window.addEventListener("resize", handleResize)
     return () => {

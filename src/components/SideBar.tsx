@@ -79,7 +79,7 @@ const SideBar = () => {
   const menuStateAfterPageLoad = () => {
     const currentURI = location.pathname;
     menuItem.map((item) => {
-      if (item.path === currentURI) {
+      if (!item.children && item.path == currentURI) {
         item.isActive = true;
       } else {
         item.children?.map((item2) => {
