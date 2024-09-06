@@ -4,6 +4,7 @@ import { toggleSidebar } from "../store/reducers/ui";
 import { Link } from "react-router-dom";
 import { emptyCurrentUser } from "../store/reducers/auth";
 import { useCookies } from "react-cookie";
+import { logoutUser } from "../services/auth";
 
 const NavBar = () => {
   const [userDropdown, setUserDropdown] = useState(false);
@@ -18,7 +19,9 @@ const NavBar = () => {
     dispatch(toggleSidebar());
   }
 
-  const logout = () => {
+  const logout = async () => {
+    // Todo: Call logout api from backend
+    await logoutUser();
     removeCookie('payload', '');
     dispatch(emptyCurrentUser());
   }

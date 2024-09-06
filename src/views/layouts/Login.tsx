@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../../store/reducers/auth";
 import { sidebarOpen } from "../../store/reducers/ui";
-import { loginWithEmail } from "../../services/auth";
+import { loginWithEmail, setAxiosHeader } from "../../services/auth";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
@@ -35,10 +35,11 @@ const Login = () => {
         });
         localStorage.sidebar = true;
         setTimeout(() => {
+          setAxiosHeader(response.data.data);
           dispatch(setCurrentUser(response.data.data));
           dispatch(sidebarOpen());
           navigate('/');
-        }, 2500);
+        }, 2600);
       }
     }
     catch (error: any) {
