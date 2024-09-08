@@ -20,7 +20,6 @@ const NavBar = () => {
   }
 
   const logout = async () => {
-    // Todo: Call logout api from backend
     await logoutUser();
     removeCookie('payload', '');
     dispatch(emptyCurrentUser());

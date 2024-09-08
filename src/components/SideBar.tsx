@@ -52,16 +52,21 @@ const menu: IMenuItem[] = [
     isExpand: false,
     children: [
       {
+        name: 'General Elements',
+        icon: 'nav-icon bi bi-circle',
+        path: '/element',
+        isActive: false
+      },
+      {
         name: 'Tables',
         icon: 'nav-icon bi bi-circle',
         path: '/table',
         isActive: false
       },
-
       {
-        name: 'General Elements',
-        icon: 'nav-icon bi bi-circle',
-        path: '/element',
+        name: 'Datatable',
+        icon: 'nav-icon bi bi-table',
+        path: '/datatable',
         isActive: false
       }
     ],

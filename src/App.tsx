@@ -10,6 +10,9 @@ import Card from "./views/pages/Card"
 import InfoBox from "./views/pages/InfoBox"
 import Table from "./views/pages/Table"
 import Element from "./views/pages/Element"
+import Datatable from "./views/pages/Datatable"
+
+
 import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch } from 'react-redux'
@@ -47,6 +50,7 @@ function App() {
             <Route path="/table" element={<Table />} />
             <Route path="/element" element={<Element />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/datatable" element={<Datatable />} />
           </Route>
         </Route>
       </Routes>
