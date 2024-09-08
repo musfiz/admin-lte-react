@@ -189,7 +189,7 @@ const SideBar = () => {
         <div className="sidebar-brand">
           <a href="#" className="brand-link">
             <img src="img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image opacity-75 shadow" />
-            <span className="brand-text fw-light">Admin LTE React</span>
+            <span className="brand-text fw-light">React LTE</span>
           </a>
         </div>
         <OverlayScrollbarsComponent defer options={{ scrollbars: { autoHide: 'scroll' } }}>

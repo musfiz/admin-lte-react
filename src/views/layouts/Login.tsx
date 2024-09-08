@@ -12,7 +12,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ email: "admin@mail.com", password: "admin@365" });
 
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -81,7 +81,7 @@ const Login = () => {
               <form method="POST" onSubmit={handleSubmit}>
                 <div className="input-group mb-3">
                   <input type="email" name="email" className={`form-control form-control-custom ${emailError ? 'is-invalid' : ''}`}
-                    placeholder="Email" onChange={handleChange} />
+                    placeholder="Email" onChange={handleChange} value={formData.email} />
                   <div className="input-group-text">
                     <span className="bi bi-envelope"></span>
                   </div>
@@ -93,7 +93,7 @@ const Login = () => {
                 </div>
                 <div className="input-group mb-3">
                   <input type="password" name="password" className={`form-control form-control-custom ${passwordError ? 'is-invalid' : ''}`}
-                    placeholder="Password" onChange={handleChange} />
+                    placeholder="Password" onChange={handleChange} value={formData.password} />
                   <div className="input-group-text">
                     <span className="bi bi-lock-fill"></span>
                   </div>
