@@ -8,7 +8,7 @@ import { logoutUser } from "../services/auth";
 
 const NavBar = () => {
   const [userDropdown, setUserDropdown] = useState(false);
-  let userDropdownRef = useRef();
+  let userDropdownRef = useRef<HTMLLIElement>(null);
   const [cookie, removeCookie] = useCookies(["payload"]);
   const sidebar = useSelector((state: any) => state.ui.sidebarCollapsed);
 

@@ -70,7 +70,7 @@ const menu: IMenuItem[] = [
 
 
 const SideBar = () => {
-  const menuRef = useRef();
+  const menuRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const [menuItem, setMenuItem] = useState(menu);
 
@@ -157,7 +157,7 @@ const SideBar = () => {
           (<ul className="nav nav-treeview" style={item.isExpand ? { display: 'block' } : { display: 'none' }}>
             {item?.children.map((item2: IMenuItem, j: number) => (
               <li className="nav-item" key={j}>
-                <Link to={item2.path} className={`nav-link ${item2.isActive ? 'active' : ''}`} onClick={() => childMenuActive(i, j)}>
+                <Link to={item2.path!} className={`nav-link ${item2.isActive ? 'active' : ''}`} onClick={() => childMenuActive(i, j)}>
                   <i className="nav-icon bi bi-circle"></i>
                   <p>{item2.name}</p>
                 </Link>

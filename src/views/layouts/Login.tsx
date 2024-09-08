@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../../store/reducers/auth";
 import { sidebarOpen } from "../../store/reducers/ui";
@@ -73,7 +73,7 @@ const Login = () => {
       <div className="login-page bg-body-secondary">
         <div className="login-box">
           <div className="login-logo">
-            <a href=""><b>Admin</b> React LTE</a>
+            <a href=""><b>React</b> LTE</a>
           </div>
           <div className="card">
             <div className="card-body login-card-body">
@@ -140,14 +140,14 @@ const Login = () => {
                   Sign in using Google+
                 </a>
               </div>
-              <p className="mb-1">
+              {/* <p className="mb-1">
                 <a href="#">I forgot my password</a>
               </p>
               <p className="mb-0">
                 <a href="#" className="text-center">
                   Register a new membership
                 </a>
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
