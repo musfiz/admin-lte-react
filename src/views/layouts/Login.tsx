@@ -35,10 +35,8 @@ const Login = () => {
       if (response.status === 200) {
         setLoading(false);
         toast.success(response.data.message);
-        const expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + 1);
         setCookie('payload', response.data.data, {
-          expires: expireDate
+          maxAge: 43200
         });
         localStorage.sidebar = true;
         setTimeout(() => {
