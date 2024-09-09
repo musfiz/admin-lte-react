@@ -4,9 +4,16 @@ const CustomDatatable = (props: object) => {
   const data = props.data;
   const columns = props.columns;
   const loading = props.loading;
-  const changePage = props.changePage;
-  const totalRows = props.totalRows ?? 20;
-  const handlePerRowsChange = props.handlePerRowsChange;
+  const totalRows = props.totalRows;
+
+  const handlePerPage = (value1: number) => {
+    props.changePerPage(value1);
+  }
+
+  const handlePage = (value: number) => {
+    props.changePage(value);
+  }
+
   return (
     <>
       <DataTable
@@ -16,17 +23,15 @@ const CustomDatatable = (props: object) => {
         // selectableRows
         dense
         pagination
-        // paginationServer
-        paginationPerPage={20}
+        paginationServer
         paginationRowsPerPageOptions={[20, 50, 100, 200, 500]}
-        persistTableHead={true}
         striped={true}
         highlightOnHover={true}
         responsive
         // pointerOnHover={true}
         paginationTotalRows={totalRows}
-        onChangeRowsPerPage={handlePerRowsChange}
-        onChangePage={changePage}
+        onChangeRowsPerPage={handlePerPage}
+        onChangePage={handlePage}
       />
     </>
   );
