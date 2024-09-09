@@ -4,6 +4,9 @@ const CustomDatatable = (props: object) => {
   const data = props.data;
   const columns = props.columns;
   const loading = props.loading;
+  const changePage = props.changePage;
+  const totalRows = props.totalRows ?? 20;
+  const handlePerRowsChange = props.handlePerRowsChange;
   return (
     <>
       <DataTable
@@ -20,7 +23,10 @@ const CustomDatatable = (props: object) => {
         striped={true}
         highlightOnHover={true}
         responsive
-      // pointerOnHover={true}
+        // pointerOnHover={true}
+        paginationTotalRows={totalRows}
+        onChangeRowsPerPage={handlePerRowsChange}
+        onChangePage={changePage}
       />
     </>
   );

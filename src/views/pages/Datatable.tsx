@@ -24,6 +24,14 @@ const Datatable = () => {
       selector: (row) => row.age,
     },
     {
+      name: 'Gender',
+      selector: (row) => row.gender,
+    },
+    {
+      name: 'Address',
+      selector: (row) => row.address,
+    },
+    {
       name: 'Action',
       width: "12%",
       cell: (row) => (
@@ -41,21 +49,27 @@ const Datatable = () => {
       name: 'Mustafizur Rahman',
       email: 'mustafiz@gmail.com',
       mobile: '01761817861',
-      age: '35'
+      age: '35',
+      gender: '',
+      address: '',
     },
     {
       id: 2,
       name: 'Israt Jahan Mim',
       email: 'eva@gmail.com',
       mobile: '01568771568',
-      age: '21'
+      age: '21',
+      gender: '',
+      address: '',
     },
     {
       id: 3,
       name: 'Shayan Ibn Mustafiz',
       email: 'shayan@gmail.com',
       mobile: '01672770568',
-      age: '2.5'
+      age: '2.5',
+      gender: '',
+      address: '',
     }
   ]
 
