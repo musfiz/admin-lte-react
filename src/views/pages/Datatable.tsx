@@ -17,7 +17,7 @@ const columns = [
   {
     name: 'SI.',
     width: '6%',
-    cell: (row: row, index: number) => row.id,
+    cell: (row: row, index: number) => index + 1,
   },
   {
     name: 'Name',
@@ -66,7 +66,8 @@ const Datatable = () => {
   const fetchPeople = async (page: number, rowsPerPage: number) => {
     setLoading(true);
     const res = await getAllPeople(page, rowsPerPage);
-    setData(res.data.data);
+    const dataWithSerails = res.data.data.map((item: object, i: number) => ({ serial: i, ...item }))
+    setData(dataWithSerails);
     setTotalRows(res.data.total);
     setLoading(false);
   }
