@@ -1,6 +1,17 @@
 import DataTable from "react-data-table-component";
 
-const CustomDatatable = (props: object) => {
+interface Props {
+  data: object[],
+  columns: object[],
+  loading: boolean,
+  totalRows: number,
+  currentPage: number,
+  rowsPerPage: number,
+  handleRowsPerPageChange: any,
+  handlePageChange: any
+}
+
+const CustomDatatable = (props: Props) => {
   const data = props.data;
   const columns = props.columns;
   const loading = props.loading;

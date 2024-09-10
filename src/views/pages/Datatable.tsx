@@ -2,40 +2,51 @@ import { useEffect, useState } from "react";
 import CustomDatatable from "../../components/Datatable";
 import { getAllPeople } from "../../services/people";
 
+
+interface row {
+  id: number,
+  name: string,
+  email: string,
+  mobile: string,
+  age: number,
+  gender: string,
+  address: string
+}
+
 const columns = [
   {
     name: 'SI.',
     width: '6%',
-    cell: (row, index) => row.id,
+    cell: (row: row, index: number) => row.id,
   },
   {
     name: 'Name',
-    selector: (row) => row.name,
+    selector: (row: row) => row.name,
   },
   {
     name: 'Email',
-    selector: (row) => row.email,
+    selector: (row: row) => row.email,
   },
   {
     name: 'Mobile No.',
-    selector: (row) => row.mobile,
+    selector: (row: row) => row.mobile,
   },
   {
     name: 'Age',
-    selector: (row) => row.age,
+    selector: (row: row) => row.age,
   },
   {
     name: 'Gender',
-    selector: (row) => row.gender,
+    selector: (row: row) => row.gender,
   },
   {
     name: 'Address',
-    selector: (row) => row.address,
+    selector: (row: row) => row.address,
   },
   {
     name: 'Action',
     width: "12%",
-    cell: (row) => (
+    cell: (row: row) => (
       <>
         <a className="btn btn-outline-success btn-sm btn-flat"><i className="bi bi-pencil"></i></a>
         <a className="btn btn-outline-primary btn-sm btn-flat mx-1"><i className="bi bi-trash"></i></a>
