@@ -6,7 +6,7 @@ const columns = [
   {
     name: 'SI.',
     width: '6%',
-    cell: (row, index) => index + 1,
+    cell: (row, index) => row.id,
   },
   {
     name: 'Name',
@@ -49,37 +49,31 @@ const Datatable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(20);
-  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchPeople = async (page: number, perPage: number) => {
+  const fetchPeople = async (page: number, rowsPerPage: number) => {
     setLoading(true);
-    console.log('====================================');
-    console.log(page, perPage);
-    console.log('====================================');
-    const response = await getAllPeople(page, perPage);
-    setData(response.data);
-    setTotalRows(response.total);
+    const res = await getAllPeople(page, rowsPerPage);
+    setData(res.data.data);
+    setTotalRows(res.data.total);
     setLoading(false);
   }
 
-  let changePerPage = (limit: number) => {
-    console.log('==========changePerPage=============');
-    console.log(limit);
-    console.log('====================================');
-    fetchPeople(1, limit);
+  let handleRowsPerPageChange = async (newRowsPerPage: number) => {
+    if (!data.length) return;
+    fetchPeople(1, newRowsPerPage);
+    setRowsPerPage(newRowsPerPage);
+    setCurrentPage(1);
   }
 
-  let changePage = (offset: number) => {
-    console.log('==========changePage=============');
-    console.log(offset);
-    console.log('====================================');
-    setPage(offset);
-    fetchPeople(offset, perPage);
+  const handlePageChange = (page: number) => {
+    fetchPeople(page, rowsPerPage);
+    setCurrentPage(page);
   }
 
   useEffect(() => {
-    fetchPeople(page, perPage);
+    fetchPeople(currentPage, rowsPerPage);
   }, []);
 
   return (
@@ -110,8 +104,10 @@ const Datatable = () => {
                 data={data}
                 totalRows={totalRows}
                 loading={loading}
-                changePerPage={changePerPage}
-                changePage={changePage}
+                currentPage={currentPage}
+                rowsPerPage={rowsPerPage}
+                handleRowsPerPageChange={handleRowsPerPageChange}
+                handlePageChange={handlePageChange}
               />
             </div>
           </div>

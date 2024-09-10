@@ -5,33 +5,36 @@ const CustomDatatable = (props: object) => {
   const columns = props.columns;
   const loading = props.loading;
   const totalRows = props.totalRows;
+  const defaultPage = props.currentPage;
+  const rowsPerPage = props.rowsPerPage;
 
-  const handlePerPage = (value1: number) => {
-    props.changePerPage(value1);
+  const handleRowsPerPageChange = (x: number) => {
+    props.handleRowsPerPageChange(x);
   }
 
-  const handlePage = (value: number) => {
-    props.changePage(value);
+  const handlePageChange = (x: number) => {
+    props.handlePageChange(x);
   }
 
   return (
     <>
       <DataTable
-        progressPending={loading}
-        columns={columns}
-        data={data}
-        // selectableRows
         dense
         pagination
         paginationServer
+        columns={columns}
+        data={data}
+        progressPending={loading}
+        paginationTotalRows={totalRows}
+        paginationDefaultPage={defaultPage}
         paginationRowsPerPageOptions={[20, 50, 100, 200, 500]}
+        paginationPerPage={rowsPerPage}
         striped={true}
         highlightOnHover={true}
         responsive
-        // pointerOnHover={true}
-        paginationTotalRows={totalRows}
-        onChangeRowsPerPage={handlePerPage}
-        onChangePage={handlePage}
+
+        onChangeRowsPerPage={handleRowsPerPageChange}
+        onChangePage={handlePageChange}
       />
     </>
   );
