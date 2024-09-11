@@ -8,7 +8,9 @@ interface Props {
   currentPage: number,
   rowsPerPage: number,
   handleRowsPerPageChange: any,
-  handlePageChange: any
+  handlePageChange: any,
+  handleSelectedRowChange?: any,
+  handleApplySelectedRows?: any
 }
 
 const CustomDatatable = (props: Props) => {
@@ -27,6 +29,16 @@ const CustomDatatable = (props: Props) => {
     props.handlePageChange(x);
   }
 
+  const handleSelectedRowChange = (row) => {
+    props.handleSelectedRowChange(row);
+  }
+
+  const handleApplySelectedRows = (row: any) => {
+    console.log('====================================');
+    console.log(row);
+    console.log('====================================');
+  }
+
   return (
     <>
       <DataTable
@@ -43,9 +55,12 @@ const CustomDatatable = (props: Props) => {
         striped={true}
         highlightOnHover={true}
         responsive
-
         onChangeRowsPerPage={handleRowsPerPageChange}
         onChangePage={handlePageChange}
+
+        selectableRows
+        onSelectedRowsChange={handleSelectedRowChange}
+      // selectableRowSelected={handleApplySelectedRows}
       />
     </>
   );

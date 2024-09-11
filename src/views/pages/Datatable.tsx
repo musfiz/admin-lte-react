@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CustomDatatable from "../../components/Datatable";
 import { getAllPeople } from "../../services/people";
 
@@ -62,6 +62,7 @@ const Datatable = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedRowsPerPage, setSelectedRowsPerPage] = useState([]);
 
   const fetchPeople = async (page: number, rowsPerPage: number) => {
     setLoading(true);
@@ -83,6 +84,18 @@ const Datatable = () => {
     fetchPeople(page, rowsPerPage);
     setCurrentPage(page);
   }
+
+  const handleSelectedRowChange = useCallback(state => {
+    console.log('====================================');
+    console.log(state);
+    console.log('====================================');
+    setSelectedRowsPerPage(state.selectedRows);
+    console.log('====================================');
+    console.log(selectedRowsPerPage);
+    console.log('====================================');
+  }, []);
+
+
 
   useEffect(() => {
     fetchPeople(currentPage, rowsPerPage);
@@ -120,6 +133,7 @@ const Datatable = () => {
                 rowsPerPage={rowsPerPage}
                 handleRowsPerPageChange={handleRowsPerPageChange}
                 handlePageChange={handlePageChange}
+                handleSelectedRowChange={handleSelectedRowChange}
               />
             </div>
           </div>
