@@ -29,15 +29,15 @@ const CustomDatatable = (props: Props) => {
     props.handlePageChange(x);
   }
 
-  const handleSelectedRowChange = (row) => {
-    props.handleSelectedRowChange(row);
-  }
+  // const handleSelectedRowChange = (row: any) => {
+  //   props.handleSelectedRowChange(row);
+  // }
 
-  const handleApplySelectedRows = (row: any) => {
-    console.log('====================================');
-    console.log(row);
-    console.log('====================================');
-  }
+  // const handleApplySelectedRows = (row: any) => {
+  //   console.log('====================================');
+  //   console.log(row);
+  //   console.log('====================================');
+  // }
 
   return (
     <>
@@ -58,8 +58,8 @@ const CustomDatatable = (props: Props) => {
         onChangeRowsPerPage={handleRowsPerPageChange}
         onChangePage={handlePageChange}
 
-        selectableRows
-        onSelectedRowsChange={handleSelectedRowChange}
+      // selectableRows
+      // onSelectedRowsChange={handleSelectedRowChange}
       // selectableRowSelected={handleApplySelectedRows}
       />
     </>

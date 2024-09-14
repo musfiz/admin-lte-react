@@ -85,15 +85,15 @@ const Datatable = () => {
     setCurrentPage(page);
   }
 
-  const handleSelectedRowChange = useCallback(state => {
-    console.log('====================================');
-    console.log(state);
-    console.log('====================================');
-    setSelectedRowsPerPage(state.selectedRows);
-    console.log('====================================');
-    console.log(selectedRowsPerPage);
-    console.log('====================================');
-  }, []);
+  // const handleSelectedRowChange = useCallback(state => {
+  // console.log('====================================');
+  // console.log(state);
+  // console.log('====================================');
+  // setSelectedRowsPerPage(state.selectedRows);
+  // console.log('====================================');
+  // console.log(selectedRowsPerPage);
+  // console.log('====================================');
+  // }, []);
 
 
 
@@ -133,7 +133,7 @@ const Datatable = () => {
                 rowsPerPage={rowsPerPage}
                 handleRowsPerPageChange={handleRowsPerPageChange}
                 handlePageChange={handlePageChange}
-                handleSelectedRowChange={handleSelectedRowChange}
+              // handleSelectedRowChange={handleSelectedRowChange}
               />
             </div>
           </div>
