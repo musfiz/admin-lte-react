@@ -1,12 +1,12 @@
 /*!
- *   AdminLTE React v1.0.0
+ *   AdminLTE React v2.0.0
  *   Author: Mustafizur Rahman
  *   Website: 
  *   License: Open source - MIT <https://opensource.org/licenses/MIT>
  */
 
 // Bootstrap Layout & components
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap.scss";
 
 // AdminLTE Configuration
 // ---------------------------------------------------
@@ -24,4 +24,3 @@
 @import "parts/miscellaneous";
 
 //Custom SCSS
-@import "custom"
