@@ -8,11 +8,14 @@ import "@fontsource/source-sans-pro";
 import { Provider } from 'react-redux'
 import store from './store/store.ts'
 import 'react-toastify/dist/ReactToastify.css';
+import { CookiesProvider } from 'react-cookie'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
     </Provider>
   </BrowserRouter>
 )
