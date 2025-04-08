@@ -1,16 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CustomDatatable from "../../components/Datatable";
-import { getAllPeople } from "../../services/people";
+import { getAllProducts } from "../../services/product";
 
 
 interface row {
   id: number,
   name: string,
-  email: string,
-  mobile: string,
-  age: number,
-  gender: string,
-  address: string
+  detail: string
 }
 
 const columns = [
@@ -24,24 +20,8 @@ const columns = [
     selector: (row: row) => row.name,
   },
   {
-    name: 'Email',
-    selector: (row: row) => row.email,
-  },
-  {
-    name: 'Mobile No.',
-    selector: (row: row) => row.mobile,
-  },
-  {
-    name: 'Age',
-    selector: (row: row) => row.age,
-  },
-  {
-    name: 'Gender',
-    selector: (row: row) => row.gender,
-  },
-  {
-    name: 'Address',
-    selector: (row: row) => row.address,
+    name: 'Details',
+    selector: (row: row) => row.detail,
   },
   {
     name: 'Action',
@@ -66,7 +46,7 @@ const Datatable = () => {
 
   const fetchPeople = async (page: number, rowsPerPage: number) => {
     setLoading(true);
-    const res = await getAllPeople(page, rowsPerPage);
+    const res = await getAllProducts(page, rowsPerPage);
     const dataWithSerails = res.data.data.map((item: object, i: number) => ({ serial: i, ...item }))
     setData(dataWithSerails);
     setTotalRows(res.data.total);
