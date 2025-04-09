@@ -4,29 +4,36 @@ import NavBar from "../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setSidebar } from "../../store/reducers/ui";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { setCurrentUser } from "../../store/reducers/auth";
 
 const Index = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cookie] = useCookies(['payload']);
   const navSidebar = useSelector((state: any) => state.ui.sidebar);
+  const isAuthenticate = cookie.payload ? cookie.payload.token : false;
 
   const handleResize = () => {
     if (window.innerWidth < 992) {
       dispatch(setSidebar(false));
+      localStorage.sidebar = false;
     } else {
-      dispatch(setSidebar(true));
+      const sidebar = localStorage.sidebar ? JSON.parse(localStorage.sidebar) : true;
+      dispatch(setSidebar(sidebar));
     }
   }
 
   useEffect(() => {
-    if (cookie.payload) {
+    if (!isAuthenticate) {
+      navigate('/login');
+    }
+    handleResize();
+    if (cookie.payload.token) {
       dispatch(setCurrentUser(cookie.payload));
     }
-    const sidebar = localStorage.sidebar ? JSON.parse(localStorage.sidebar) : true;
-    dispatch(setSidebar(sidebar));
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener('mousedown', handleResize);
