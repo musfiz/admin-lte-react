@@ -14,6 +14,9 @@ const columns = [
     name: 'SI.',
     width: '6%',
     cell: (row: row, index: number) => index + 1,
+    style: {
+      justifyContent: 'center'
+    }
   },
   {
     name: 'Name',
@@ -25,7 +28,10 @@ const columns = [
   },
   {
     name: 'Action',
-    width: "12%",
+    width: "14%",
+    style: {
+      justifyContent: 'center'
+    },
     cell: (row: row) => (
       <>
         <a className="btn btn-outline-success btn-sm btn-flat"><i className="bi bi-pencil"></i></a>
@@ -35,7 +41,7 @@ const columns = [
   }
 ];
 
-const Datatable = () => {
+const Product = () => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -75,13 +81,13 @@ const Datatable = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-sm-6">
-              <h3 className="mb-0">Datatable</h3>
+              <h3 className="mb-0">Product</h3>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-end">
                 <li className="breadcrumb-item"><a href="#">Home</a></li>
                 <li className="breadcrumb-item active" aria-current="page">
-                  Datatable
+                  Product
                 </li>
               </ol>
             </div>
@@ -110,4 +116,4 @@ const Datatable = () => {
   );
 }
 
-export default Datatable;
+export default Product;

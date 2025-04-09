@@ -64,9 +64,9 @@ const menu: IMenuItem[] = [
         isActive: false
       },
       {
-        name: 'Datatable',
+        name: 'Product',
         icon: 'nav-icon bi bi-table',
-        path: '/datatable',
+        path: '/product',
         isActive: false
       }
     ],
