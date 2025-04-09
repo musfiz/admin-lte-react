@@ -1,31 +1,33 @@
 import SideBar from "../../components/SideBar";
 import Footer from "../../components/Footer";
+import NavBar from "../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { sidebarCollapse, sidebarOpen } from "../../store/reducers/ui";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import NavBar from "../../components/Navbar";
+import { setSidebar } from "../../store/reducers/ui";
+import { Outlet } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { setCurrentUser } from "../../store/reducers/auth";
 
 const Index = () => {
-
-  const sidebarCollapsed = useSelector((state: any) => state.ui.sidebarCollapsed);
   const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [cookie] = useCookies(['payload']);
+  const navSidebar = useSelector((state: any) => state.ui.sidebar);
 
   const handleResize = () => {
     if (window.innerWidth < 992) {
-      dispatch(sidebarCollapse())
+      dispatch(setSidebar(false));
     } else {
-      dispatch(sidebarOpen())
+      dispatch(setSidebar(true));
     }
   }
 
   useEffect(() => {
-    const currentURI = location.pathname;
-    navigate(currentURI);
-    handleResize();
-    window.addEventListener("resize", handleResize)
+    if (cookie.payload) {
+      dispatch(setCurrentUser(cookie.payload));
+    }
+    const sidebar = localStorage.sidebar ? JSON.parse(localStorage.sidebar) : true;
+    dispatch(setSidebar(sidebar));
+    window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener('mousedown', handleResize);
     }
@@ -33,7 +35,7 @@ const Index = () => {
 
   return (
     <>
-      <div className={`layout-fixed sidebar-expand-lg bg-body-tertiary ${sidebarCollapsed ? 'sidebar-collapse' : 'sidebar-open'}`}>
+      <div className={`layout-fixed sidebar-expand-lg bg-body-tertiary ${navSidebar ? 'sidebar-open' : 'sidebar-collapse'}`}>
         <div className="app-wrapper">
           <NavBar />
           <SideBar />

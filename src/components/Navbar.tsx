@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSidebar } from "../store/reducers/ui";
+import { setSidebar, toggleSidebar } from "../store/reducers/ui";
 import { Link } from "react-router-dom";
 import { emptyCurrentUser } from "../store/reducers/auth";
 import { useCookies } from "react-cookie";
@@ -10,12 +10,10 @@ const NavBar = () => {
   const [userDropdown, setUserDropdown] = useState(false);
   let userDropdownRef = useRef<HTMLLIElement>(null);
   const [cookie, removeCookie] = useCookies(["payload"]);
-  const sidebar = useSelector((state: any) => state.ui.sidebarCollapsed);
 
   const dispatch = useDispatch();
 
-  const collapsedSidebar = () => {
-    localStorage.sidebar = sidebar;
+  const sidebarToggle = () => {
     dispatch(toggleSidebar());
   }
 
@@ -23,6 +21,7 @@ const NavBar = () => {
     await logoutUser();
     removeCookie('payload', '');
     dispatch(emptyCurrentUser());
+    dispatch(setSidebar(true));
   }
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const NavBar = () => {
         <div className="container-fluid">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" data-lte-toggle="sidebar" href="#" role="button" onClick={collapsedSidebar}>
+              <a className="nav-link" data-lte-toggle="sidebar" href="#" role="button" onClick={sidebarToggle}>
                 <i className="bi bi-list"></i>
               </a>
             </li>

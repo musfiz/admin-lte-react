@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { sidebarCollapse } from "../store/reducers/ui";
+import { setSidebar } from "../store/reducers/ui";
 import { slideDown, slideUp } from "../helpers/sidebarHelper";
 
 export interface IMenuItem {
@@ -73,13 +73,18 @@ const menu: IMenuItem[] = [
   },
 ]
 
-
 const SideBar = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const [menuItem, setMenuItem] = useState(menu);
 
   const location = useLocation();
+
+  let handler = (e: any) => {
+    if (window.innerWidth < 992 && !menuRef?.current?.contains(e.target)) {
+      dispatch(setSidebar(false));
+    }
+  }
 
   const menuStateAfterPageLoad = () => {
     const currentURI = location.pathname;
@@ -177,11 +182,6 @@ const SideBar = () => {
 
   useEffect(() => {
     menuStateAfterPageLoad();
-    let handler = (e: any) => {
-      if (window.innerWidth < 992 && !menuRef?.current?.contains(e.target)) {
-        dispatch(sidebarCollapse());
-      }
-    }
     document.addEventListener('mousedown', handler);
     return () => {
       document.removeEventListener('mousedown', handler);

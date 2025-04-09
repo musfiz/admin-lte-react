@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export interface uiState {
-  sidebarCollapsed: boolean,
+  sidebar: boolean,
 }
 
 const initialState: uiState = {
-  sidebarCollapsed: false
+  sidebar: localStorage.sidebar ? JSON.parse(localStorage.sidebar) : true
 }
 
 export const uiSlice = createSlice({
@@ -14,21 +13,18 @@ export const uiSlice = createSlice({
   initialState,
   reducers: {
     toggleSidebar: (state) => {
-      state.sidebarCollapsed = !state.sidebarCollapsed;
+      state.sidebar = !state.sidebar;
+      localStorage.sidebar = state.sidebar;
     },
-    sidebarOpen: (state) => {
-      state.sidebarCollapsed = false;
-    },
-    sidebarCollapse: (state) => {
-      state.sidebarCollapsed = true;
+    setSidebar: (state, data) => {
+      state.sidebar = data.payload;
     }
   }
 });
 
 export const {
   toggleSidebar,
-  sidebarOpen,
-  sidebarCollapse
+  setSidebar
 } = uiSlice.actions
 
 export default uiSlice.reducer;
