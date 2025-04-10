@@ -11,9 +11,9 @@ interface row {
 
 const columns = [
   {
-    name: 'SI.',
+    name: '#',
     width: '6%',
-    cell: (row: row, index: number) => index + 1,
+    cell: (row: any) => row.sn,
     style: {
       justifyContent: 'center'
     }
@@ -48,12 +48,13 @@ const Product = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedRowsPerPage, setSelectedRowsPerPage] = useState([]);
 
   const fetchPeople = async (page: number, rowsPerPage: number) => {
     setLoading(true);
     const res = await getAllProducts(page, rowsPerPage);
-    const dataWithSerails = res.data.data.map((item: object, i: number) => ({ serial: i, ...item }))
+    const dataWithSerails = res.data.data.map((item: any, i: number) => {
+      return { sn: (res.data.from) + i, ...item }
+    });
     setData(dataWithSerails);
     setTotalRows(res.data.total);
     setLoading(false);
