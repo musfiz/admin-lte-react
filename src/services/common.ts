@@ -13,7 +13,7 @@ if (loggedUser) {
 }
 
 
-export const setAxiosHeader = (loggedUser: IloggedUser) => {
+export const setAxiosHeader = (loggedUser: IloggedUser) => { //call from login
   headers.set('Authorization', `Bearer ${loggedUser.token}`);
 }
 

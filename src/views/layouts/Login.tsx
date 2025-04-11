@@ -6,6 +6,7 @@ import { loginWithEmail } from "../../services/auth";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
+import useAuth from "../../hooks/auth";
 
 
 const Login = () => {
@@ -21,7 +22,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  const isAuthenticate = cookie.payload ? Boolean(JSON.parse(cookie.payload).token) : false;
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
 
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,6 +45,7 @@ const Login = () => {
         setTimeout(() => {
           setAxiosHeader(response.data.data);
           dispatch(setCurrentUser(response.data.data));
+          setIsAuthenticated(true);
           navigate('/');
         }, 2600);
       }
@@ -68,9 +70,7 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (isAuthenticate) {
-      navigate('/');
-    }
+
   }, []);
 
   return (

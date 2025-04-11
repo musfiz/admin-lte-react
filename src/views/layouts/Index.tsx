@@ -6,14 +6,12 @@ import { useEffect } from "react";
 import { setSidebar } from "../../store/reducers/ui";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { setCurrentUser } from "../../store/reducers/auth";
 
 const Index = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cookie] = useCookies(['payload']);
   const navSidebar = useSelector((state: any) => state.ui.sidebar);
-  const isAuthenticate = cookie.payload ? cookie.payload.token : false;
 
   const handleResize = () => {
     if (window.innerWidth < 992) {
@@ -26,14 +24,7 @@ const Index = () => {
   }
 
   useEffect(() => {
-    if (!isAuthenticate) {
-      navigate('/login');
-    }
     handleResize();
-    if (cookie.payload.token) {
-      dispatch(setCurrentUser(cookie.payload));
-    }
-
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener('mousedown', handleResize);
