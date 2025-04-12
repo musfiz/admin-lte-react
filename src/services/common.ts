@@ -7,11 +7,10 @@ export const headers = new AxiosHeaders({
   Accept: "application/json",
 });
 
-let loggedUser = new Cookies().get('payload');
-if (loggedUser) {
-  headers.set('Authorization', `Bearer ${loggedUser.token}`);
+let payload = new Cookies().get('payload');
+if (payload && payload.token) {
+  headers.set('Authorization', `Bearer ${payload.token}`);
 }
-
 
 export const setAxiosHeader = (loggedUser: IloggedUser) => { //call from login
   headers.set('Authorization', `Bearer ${loggedUser.token}`);

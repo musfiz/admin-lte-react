@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setSidebar } from "../../store/reducers/ui";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { Cookies } from "react-cookie";
+
 
 const Index = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [cookie] = useCookies(['payload']);
   const navSidebar = useSelector((state: any) => state.ui.sidebar);
 
   const handleResize = () => {
