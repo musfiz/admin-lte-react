@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../../store/reducers/auth";
-import { sidebarOpen } from "../../store/reducers/ui";
 import { setAxiosHeader } from "../../services/common";
 import { loginWithEmail } from "../../services/auth";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,7 +9,6 @@ import { useCookies } from "react-cookie";
 
 
 const Login = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({ email: "admin@mail.com", password: "admin@365" });
@@ -23,6 +21,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
+  const isAuthenticate = cookie.payload ? Boolean(JSON.parse(cookie.payload).token) : false;
+
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -33,6 +33,7 @@ const Login = () => {
     setDisabled(true);
     try {
       const response = await loginWithEmail(formData);
+      console.log(response);
       if (response.status === 200) {
         setLoading(false);
         toast.success(response.data.message);
@@ -43,7 +44,6 @@ const Login = () => {
         setTimeout(() => {
           setAxiosHeader(response.data.data);
           dispatch(setCurrentUser(response.data.data));
-          dispatch(sidebarOpen());
           navigate('/');
         }, 2600);
       }
@@ -66,6 +66,12 @@ const Login = () => {
       setDisabled(false);
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticate) {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <>

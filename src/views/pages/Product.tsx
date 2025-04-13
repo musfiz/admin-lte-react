@@ -1,51 +1,37 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CustomDatatable from "../../components/Datatable";
-import { getAllPeople } from "../../services/people";
+import { getAllProducts } from "../../services/product";
 
 
 interface row {
   id: number,
   name: string,
-  email: string,
-  mobile: string,
-  age: number,
-  gender: string,
-  address: string
+  detail: string
 }
 
 const columns = [
   {
-    name: 'SI.',
+    name: '#',
     width: '6%',
-    cell: (row: row, index: number) => index + 1,
+    cell: (row: any) => row.sn,
+    style: {
+      justifyContent: 'center'
+    }
   },
   {
     name: 'Name',
     selector: (row: row) => row.name,
   },
   {
-    name: 'Email',
-    selector: (row: row) => row.email,
-  },
-  {
-    name: 'Mobile No.',
-    selector: (row: row) => row.mobile,
-  },
-  {
-    name: 'Age',
-    selector: (row: row) => row.age,
-  },
-  {
-    name: 'Gender',
-    selector: (row: row) => row.gender,
-  },
-  {
-    name: 'Address',
-    selector: (row: row) => row.address,
+    name: 'Details',
+    selector: (row: row) => row.detail,
   },
   {
     name: 'Action',
-    width: "12%",
+    width: "14%",
+    style: {
+      justifyContent: 'center'
+    },
     cell: (row: row) => (
       <>
         <a className="btn btn-outline-success btn-sm btn-flat"><i className="bi bi-pencil"></i></a>
@@ -55,19 +41,20 @@ const columns = [
   }
 ];
 
-const Datatable = () => {
+const Product = () => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedRowsPerPage, setSelectedRowsPerPage] = useState([]);
 
   const fetchPeople = async (page: number, rowsPerPage: number) => {
     setLoading(true);
-    const res = await getAllPeople(page, rowsPerPage);
-    const dataWithSerails = res.data.data.map((item: object, i: number) => ({ serial: i, ...item }))
+    const res = await getAllProducts(page, rowsPerPage);
+    const dataWithSerails = res.data.data.map((item: any, i: number) => {
+      return { sn: (res.data.from) + i, ...item }
+    });
     setData(dataWithSerails);
     setTotalRows(res.data.total);
     setLoading(false);
@@ -95,13 +82,13 @@ const Datatable = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-sm-6">
-              <h3 className="mb-0">Datatable</h3>
+              <h3 className="mb-0">Product</h3>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-end">
                 <li className="breadcrumb-item"><a href="#">Home</a></li>
                 <li className="breadcrumb-item active" aria-current="page">
-                  Datatable
+                  Product
                 </li>
               </ol>
             </div>
@@ -130,4 +117,4 @@ const Datatable = () => {
   );
 }
 
-export default Datatable;
+export default Product;
