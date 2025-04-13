@@ -21,8 +21,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  const isAuthenticate = cookie.payload ? Boolean(JSON.parse(cookie.payload).token) : false;
-
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -33,7 +31,7 @@ const Login = () => {
     setDisabled(true);
     try {
       const response = await loginWithEmail(formData);
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         setLoading(false);
         toast.success(response.data.message);
@@ -68,9 +66,7 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (isAuthenticate) {
-      navigate('/');
-    }
+
   }, []);
 
   return (
