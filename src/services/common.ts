@@ -7,6 +7,8 @@ export const headers = new AxiosHeaders({
   Accept: "application/json",
 });
 
+console.log('---Call all time---');
+
 let payload = new Cookies().get('payload');
 if (payload && payload.token) {
   headers.set('Authorization', `Bearer ${payload.token}`);

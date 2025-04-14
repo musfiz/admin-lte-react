@@ -4,8 +4,7 @@ import NavBar from "../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setSidebar } from "../../store/reducers/ui";
-import { Outlet, useNavigate } from "react-router-dom";
-import { Cookies } from "react-cookie";
+import { Outlet } from "react-router-dom";
 
 
 const Index = () => {
